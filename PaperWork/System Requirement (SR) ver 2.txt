@@ -1,0 +1,337 @@
+System Requirement (SR)
+        │
+        ▼
+Interface Requirements (IR)
+        │
+        ▼
+Functional Requirements (FR) / Initial Conditions (IC)
+        │
+        ▼
+Software Requirements
+        │
+        ├── High-Level Requirements (HLR)
+        │
+        └── Initial Conditions
+                │
+                ▼
+            Simulink Block
+                │
+                ▼
+             Test Case
+
+
+===============================================================================
+SR-001 EQUATION 1 CALCULATION
+===============================================================================
+
+System Requirement
+│
+└── SR-001 Equation 1 Calculation
+    │
+    └── The system shall generate output y according to:
+        
+        y = t² - 4t + 21
+
+Interface Requirements
+│
+├── IR-001 Time Input
+│   └── The system shall accept time t as an input
+│       represented in seconds.
+│
+└── IR-002 Y Output
+    └── The system shall provide y as an output.
+
+Functional Requirements
+│
+└── FR-001 Calculate Y
+    └── The system shall calculate:
+        
+        y = t² - 4t + 21
+
+Initial Conditions
+│
+├── IC-001 Initialize Time
+│   └── At initialization, t shall equal 0.0 seconds.
+│
+└── IC-002 Initialize Y
+    └── At initialization, y shall equal 0.0.
+
+Software Requirements
+│
+├── HLR-001 Generate Time Signal
+│   └── The software shall generate a time signal
+│       from 0.0 s to 15.0 s in increments of 0.25 s.
+│
+├── HLR-002 Compute Polynomial
+│   └── The software shall compute:
+│
+│       y = COEFF_A*t² + COEFF_B*t + COEFF_C
+│
+│       where:
+│       COEFF_A = 1
+│       COEFF_B = -4
+│       COEFF_C = 21
+│
+├── HLR-003 Store Y as Float
+│   └── The software shall store y as a
+│       floating-point value.
+│
+└── HLR-004 Output Y
+    └── The software shall provide y at the
+        output interface.
+
+Software Initial Conditions
+│
+├── HLR-005 Initialize Time Signal
+│   └── The software shall initialize t to 0.0 seconds.
+│
+└── HLR-006 Initialize Y Output
+    └── The software shall initialize y to 0.0.
+
+
+Model Structure
+│
+├── 01_Polynomial_System
+│   ├── Time_Source
+│   ├── Compute_T_Squared
+│   ├── Apply_COEFF_A
+│   ├── Compute_Minus4T
+│   ├── Constant_21
+│   ├── Compute_Y
+│   ├── Convert_Y_Type
+│   └── Y_Output
+│
+├── Design Parameters
+│   ├── COEFF_A = 1
+│   ├── COEFF_B = -4
+│   └── COEFF_C = 21
+│
+├── Signals
+│   ├── t
+│   ├── t_squared
+│   ├── coeffA_t_squared
+│   ├── neg_4t
+│   ├── const_21
+│   ├── y_raw
+│   └── y
+│
+└── Equation Implemented
+    
+    y = COEFF_A*t² + COEFF_B*t + COEFF_C
+      = 1*t² + (-4)*t + 21
+      = t² - 4t + 21
+
+
+Traceability
+│
+├── FR-001
+│   ├── HLR-001
+│   ├── HLR-002
+│   ├── HLR-003
+│   └── HLR-004
+│
+├── IC-001
+│   └── HLR-005
+│
+└── IC-002
+    └── HLR-006
+
+
+===============================================================================
+SR-002 EQUATION 2 DERIVATIVE CALCULATION
+===============================================================================
+
+System Requirement
+│
+└── SR-002 Equation 2 Derivative Calculation
+    │
+    └── The system shall generate output z according to:
+        
+        z = dy/dt
+
+Interface Requirements
+│
+├── IR-003 Y Input
+│   └── The system shall accept y as an input.
+│
+└── IR-004 Z Output
+    └── The system shall provide z as an output.
+
+Functional Requirements
+│
+└── FR-002 Calculate Z
+    └── The system shall calculate:
+        
+        z = dy/dt
+
+Initial Conditions
+│
+└── IC-003 Initialize Z
+    └── At initialization, z shall equal 0.0.
+
+Software Requirements
+│
+├── HLR-007 Receive Y
+│   └── The software shall receive y as an input signal.
+│
+├── HLR-008 Compute Derivative
+│   └── The software shall calculate z as the
+│       derivative of y with respect to time.
+│
+├── HLR-009 Store Z as Float
+│   └── The software shall store z as a
+│       floating-point value.
+│
+└── HLR-010 Output Z
+    └── The software shall provide z at the
+        output interface.
+
+Software Initial Conditions
+│
+└── HLR-011 Initialize Z Output
+    └── The software shall initialize z to 0.0.
+
+
+Model Structure
+│
+├── 02_Derivative_System
+│   ├── Y_Input
+│   ├── Compute_Derivative
+│   ├── Convert_Z_Type
+│   └── Z_Output
+│
+├── Design Parameters
+│   └── None Required
+│
+├── Signals
+│   ├── y
+│   ├── z_raw
+│   └── z
+│
+└── Equation Implemented
+    
+    z = dy/dt
+
+
+Traceability
+│
+├── FR-002
+│   ├── HLR-007
+│   ├── HLR-008
+│   ├── HLR-009
+│   └── HLR-010
+│
+└── IC-003
+    └── HLR-011
+
+
+===============================================================================
+SR-003 EQUATION 3 CALCULATION
+===============================================================================
+
+System Requirement
+│
+└── SR-003 Equation 3 Calculation
+    │
+    └── The system shall generate output x according to:
+        
+        x = -t² + yz⁻¹
+        
+        where z⁻¹ is the previous value of z
+        provided by a Unit Delay block.
+
+Interface Requirements
+│
+├── IR-005 Time Input
+│   └── The system shall accept t as an input.
+│
+├── IR-006 Y Input
+│   └── The system shall accept y as an input.
+│
+└── IR-007 X Output
+    └── The system shall provide x as an output.
+
+Functional Requirements
+│
+├── FR-003 Delay Z
+│   └── The system shall retain the previous
+│       value of z using a Unit Delay.
+│
+└── FR-004 Calculate X
+    └── The system shall calculate:
+        
+        x = -t² + yz⁻¹
+
+Initial Conditions
+│
+├── IC-004 Initialize Unit Delay
+│   └── At initialization, z⁻¹ shall equal 0.0.
+│
+└── IC-005 Initialize X
+    └── At initialization, x shall equal 0.
+
+Software Requirements
+│
+├── HLR-012 Store Previous Z
+│   └── The software shall store the previous
+│       value of z using a Unit Delay block.
+│
+├── HLR-013 Compute X
+│   └── The software shall compute:
+│
+│       x = -t² + yz⁻¹
+│
+├── HLR-014 Store X as Integer
+│   └── The software shall store x as an
+│       integer value.
+│
+└── HLR-015 Output X
+    └── The software shall provide x at the
+        output interface.
+
+Software Initial Conditions
+│
+├── HLR-016 Initialize Unit Delay
+│   └── The software shall initialize the
+│       Unit Delay block to 0.0.
+│
+└── HLR-017 Initialize X Output
+    └── The software shall initialize x to 0.
+
+
+Model Structure
+│
+├── 03_DelayedPolynomial_System
+│   ├── Time_Input
+│   ├── Y_Input
+│   ├── Z_Input
+│   ├── Compute_Delayed_Z
+│   ├── Compute_T_Squared
+│   ├── Compute_NegT_Squared
+│   ├── Compute_YZ_Delay
+│   ├── Compute_X
+│   ├── Convert_X_Type
+│   └── X_Output
+│
+├── Signals
+│   ├── t
+│   ├── y
+│   ├── z
+│   ├── z_delay
+│   ├── t_squared
+│   ├── neg_t_squared
+│   ├── yz_delay
+│   ├── x_raw
+│   └── x
+│
+└── Equation Implemented
+    
+    x = -t² + yz⁻¹
+
+
+Traceability
+│
+├── FR-003
+│   └── HLR-012
+│
+├── FR-
