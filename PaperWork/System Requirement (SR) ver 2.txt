@@ -263,8 +263,7 @@ System Requirement
 Interface Requirements
 │
 ├── IR-001 Time Input
-│   └── The system shall accept time t as an input
-│       represented in seconds.
+│   └── The system shall accept time t as an input represented in seconds.
 │
 └── IR-002 Y Output
     └── The system shall provide y as an output.
@@ -287,8 +286,7 @@ Initial Conditions
 Software Requirements
 │
 ├── HLR-001 Generate Time Signal
-│   └── The software shall generate a time signal
-│       from 0.0 s to 15.0 s in increments of 0.25 s.
+│   └── The software shall generate a time signal from 0.0 s to 15.0 s in increments of 0.25 s.
 │
 ├── HLR-002 Compute Polynomial
 │   └── The software shall compute:
@@ -301,12 +299,10 @@ Software Requirements
 │       COEFF_C = 21
 │
 ├── HLR-003 Store Y as Float
-│   └── The software shall store y as a
-│       floating-point value.
+│   └── The software shall store y as a floating-point value.
 │
 └── HLR-004 Output Y
-    └── The software shall provide y at the
-        output interface.
+    └── The software shall provide y at the output interface.
 
 Software Initial Conditions
 │
