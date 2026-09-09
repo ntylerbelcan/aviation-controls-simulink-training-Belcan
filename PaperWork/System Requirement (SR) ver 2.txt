@@ -1,23 +1,198 @@
-System Requirement (SR)
+System Requirement (SR)                ← SystemRequirements.slreqx
+        │
+        ├── Interface Requirements (IR)
+        ├── Functional Requirements (FR)
+        └── Initial Conditions (IC)
         │
         ▼
-Interface Requirements (IR)
-        │
-        ▼
-Functional Requirements (FR) / Initial Conditions (IC)
-        │
-        ▼
-Software Requirements
+Software Requirements                  ← SoftwareRequirements.slreqx
         │
         ├── High-Level Requirements (HLR)
-        │
         └── Software Initial Conditions
-                │
-                ▼
-            Simulink Block
-                │
-                ▼
-             Test Case
+        │
+        ▼
+Simulink Model (LLR)                   ← ModelName.slx
+        │
+        ├── Linked Block-to-HLR Traceability
+        │       (stored in model links)
+        │
+        ▼
+Model Quality Checks
+	│
+	├── Model Advisor
+	│ 	└── Verify modeling standards
+	│ 	MAAB
+	│ 	JMAAB
+	│ 	Company Guidelines
+	│ 	DO-178C Modeling Checks
+	│
+	├── Bug Finder
+	│ 	└── Detect modeling defects
+	│ 	Dead logic
+	│ 	Divide by zero
+	│ 	Overflow risks
+	│ 	Unreachable logic
+	│ 	Array bounds issues
+	│
+	├── Polyspace
+	│ 	└── Formal static analysis
+	│ 	Runtime errors
+	│ 	Integer overflow
+	│ 	Division by zero
+	│ 	Dead code
+	│ 	Code verification
+	│
+	▼
+Verification
+        │
+        ├── Test Harness               ← HarnessName.slx
+        │
+        ├── Test Manager               ← Tests.mldatx
+        │
+        ├── Assessments
+        │       ├── Assessment Logic
+        │       └── Assessment Symbols
+        │
+        ├── Callback Scripts           ← Callbacks.m
+        │
+        ├── Coverage Results           ← Coverage.cvg
+        │
+        └── Reports
+                ├── PDF Report         ← *.pdf
+                ├── Word Report        ← *.docx
+                └── HTML Report        ← *.html
+
+
+Typical Project Folder Structure
+
+Project
+│
+├── Requirements
+│   ├── SystemRequirements.slreqx
+│   └── SoftwareRequirements.slreqx
+│
+├── Models
+│   ├── 01_Polynomial_System.slx
+│   ├── 02_Derivative_System.slx
+│   └── 03_DelayedPolynomial_System.slx
+│
+├── Harnesses
+│   ├── TH_01_Polynomial_System.slx
+│   ├── TH_02_Derivative_System.slx
+│   └── TH_03_DelayedPolynomial_System.slx
+│
+├── Tests
+│   ├── VerificationTests.mldatx
+│   ├── Callbacks.m
+│   └── Coverage.cvg
+│
+├── Data
+│   └── Polynomial_System.sldd
+│
+└── Reports
+    ├── RequirementsReport.pdf
+    ├── TraceabilityReport.pdf
+    ├── CoverageReport.pdf
+    └── TestReport.pdf
+
+
+
+
+Project
+│
+├── Requirements
+│   │
+│   └── SystemRequirements.slreqx
+│       └── System-level requirements imported from
+│           Cameo, DOORS, Excel, Word, PDF, etc.
+│
+├── Components
+│   │
+│   ├── Polynomial_System
+│   │   │
+│   │   ├── Polynomial_System_HLR.slreqx			Software Requirements (HLRs)
+│   │   ├── Polynomial_System.slx					Simulink implementation
+│   │   ├── Polynomial_System.sldd					Parameters, Signals, Enumerations
+│   │   │
+│   │   └── Tests
+│   │       │
+│   │       ├── TH_Polynomial_System.slx			Test Harness
+│   │       ├── Polynomial_System_Test.mldatx		Simulink Test Manager File
+│   │       ├── Polynomial_System_Test.slreqx		Verification Requirements
+│   │       ├── Callbacks.m						Test Initialization / Setup Scripts
+│   │       ├── Coverage.cvg						Coverage Configuration / Results
+│   │       │
+│   │       └── Reports (This folder is not typically used)
+│   │           │
+│   │           ├── RequirementsReport.pdf			Requirements hierarchy
+│   │           ├── TraceabilityReport.pdf			SR → HLR → Model → Test links
+│   │           ├── CoverageReport.pdf				MC/DC Coverage Results
+│   │           └── TestReport.pdf					Test execution results
+│   │
+│   ├── Derivative_System
+│   │   │
+│   │   ├── Derivative_System_HLR.slreqx
+│   │   ├── Derivative_System.slx
+│   │   ├── Derivative_System.sldd
+│   │   │
+│   │   └── Tests
+│   │       ├── TH_Derivative_System.slx
+│   │       ├── Derivative_System_Test.mldatx
+│   │       ├── Derivative_System_Test.slreqx
+│   │       ├── Callbacks.m
+│   │       ├── Coverage.cvg
+│   │       └── Reports
+│   │
+│   └── DelayedPolynomial_System
+│       │
+│       ├── DelayedPolynomial_System_HLR.slreqx
+│       ├── DelayedPolynomial_System.slx
+│       ├── DelayedPolynomial_System.sldd
+│       │
+│       └── Tests
+│           ├── TH_DelayedPolynomial_System.slx
+│           ├── DelayedPolynomial_System_Test.mldatx
+│           ├── DelayedPolynomial_System_Test.slreqx
+│           ├── Callbacks.m
+│           ├── Coverage.cvg
+│           └── Reports
+
+
+
+File Extensions Cheat Sheet
+.slreqx   = Requirements Set
+.slx      = Simulink Model
+.slx      = Test Harness
+.sldd     = Simulink Data Dictionary
+.mldatx   = Simulink Test Manager File
+.m        = MATLAB Script / Callback File
+.cvg      = Coverage Data File
+.mat      = MATLAB Data File
+.pdf      = Generated Report
+.docx     = Generated Report
+.html     = Generated Report
+
+
+Student Workflow
+1. Import System Requirements       (.slreqx)
+2. Create Software Requirements     (.slreqx)
+3. Create Simulink Model            (.slx)
+4. Link Blocks to HLRs
+5. Create Test Harness              (.slx)
+6. Create Test Manager File         (.mldatx)
+7. Create Assessments
+8. Create Callback Scripts          (.m)
+9. Collect Coverage                 (.cvg)
+10. Generate Reports
+
+
+
+
+
+
+
+
+
 
 
 
@@ -34,6 +209,44 @@ discuss when design updates need to be implemented for system requirements (be a
 need to be able to ask questions...
 how do decompose system requirements
 instil good practice as I go thru the process 
+
+
+
+
+
+3. Clarification Training (Very Important)
+Is the requirement testable?
+Is the requirement ambiguous?
+Is the range defined?
+Are initial conditions defined?
+Are data types defined?
+Are units defined?
+Are interfaces defined?
+
+Questions:
+What derivative method is required?
+Analytical?
+Continuous Derivative block?
+Backward difference?
+Forward difference?
+Sample time?
+
+4. Design Change Rules
+Requirement changes
+    ↓
+Requirements Update
+    ↓
+HLR Update
+    ↓
+Model Update
+    ↓
+Test Update
+    ↓
+Coverage Re-run
+
+
+
+
 
 ===============================================================================
 SR-001 EQUATION 1 CALCULATION
