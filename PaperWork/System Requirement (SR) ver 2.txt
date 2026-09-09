@@ -11,7 +11,7 @@ Software Requirements
         │
         ├── High-Level Requirements (HLR)
         │
-        └── Initial Conditions
+        └── Software Initial Conditions
                 │
                 ▼
             Simulink Block
@@ -19,6 +19,21 @@ Software Requirements
                 ▼
              Test Case
 
+
+
+give Sys requirement but explain how you get them into the matlab/Simulink environment and how to use them
+
+have the student create the hlr's then the model, then the unit tests (if i get the license working)
+
+discuss when design updates need to be implemented for system requirements (be able to teach how to ask when a sys requirement needs clarity)
+- review cameo
+- draw.io (visio)
+- determine who your sys req author is and ask questions
+
+
+need to be able to ask questions...
+how do decompose system requirements
+instil good practice as I go thru the process 
 
 ===============================================================================
 SR-001 EQUATION 1 CALCULATION
@@ -88,7 +103,6 @@ Software Initial Conditions
 └── HLR-006 Initialize Y Output
     └── The software shall initialize y to 0.0.
 
-
 Model Structure
 │
 ├── 01_Polynomial_System
@@ -121,8 +135,32 @@ Model Structure
       = 1*t² + (-4)*t + 21
       = t² - 4t + 21
 
+Block Traceability
+│
+├── HLR-001
+│   └── Time_Source
+│
+├── HLR-002
+│   ├── Compute_T_Squared
+│   ├── Apply_COEFF_A
+│   ├── Compute_Minus4T
+│   ├── Constant_21
+│   └── Compute_Y
+│
+├── HLR-003
+│   └── Convert_Y_Type
+│
+├── HLR-004
+│   └── Y_Output
+│
+├── HLR-005
+│   └── Time_Source
+│
+└── HLR-006
+    ├── Convert_Y_Type
+    └── Y_Output
 
-Traceability
+Requirements Traceability
 │
 ├── FR-001
 │   ├── HLR-001
@@ -191,7 +229,6 @@ Software Initial Conditions
 └── HLR-011 Initialize Z Output
     └── The software shall initialize z to 0.0.
 
-
 Model Structure
 │
 ├── 02_Derivative_System
@@ -199,9 +236,6 @@ Model Structure
 │   ├── Compute_Derivative
 │   ├── Convert_Z_Type
 │   └── Z_Output
-│
-├── Design Parameters
-│   └── None Required
 │
 ├── Signals
 │   ├── y
@@ -212,8 +246,25 @@ Model Structure
     
     z = dy/dt
 
+Block Traceability
+│
+├── HLR-007
+│   └── Y_Input
+│
+├── HLR-008
+│   └── Compute_Derivative
+│
+├── HLR-009
+│   └── Convert_Z_Type
+│
+├── HLR-010
+│   └── Z_Output
+│
+└── HLR-011
+    ├── Convert_Z_Type
+    └── Z_Output
 
-Traceability
+Requirements Traceability
 │
 ├── FR-002
 │   ├── HLR-007
@@ -298,7 +349,6 @@ Software Initial Conditions
 └── HLR-017 Initialize X Output
     └── The software shall initialize x to 0.
 
-
 Model Structure
 │
 ├── 03_DelayedPolynomial_System
@@ -328,10 +378,42 @@ Model Structure
     
     x = -t² + yz⁻¹
 
+Block Traceability
+│
+├── HLR-012
+│   └── Compute_Delayed_Z
+│
+├── HLR-013
+│   ├── Compute_T_Squared
+│   ├── Compute_NegT_Squared
+│   ├── Compute_YZ_Delay
+│   └── Compute_X
+│
+├── HLR-014
+│   └── Convert_X_Type
+│
+├── HLR-015
+│   └── X_Output
+│
+├── HLR-016
+│   └── Compute_Delayed_Z
+│
+└── HLR-017
+    ├── Convert_X_Type
+    └── X_Output
 
-Traceability
+Requirements Traceability
 │
 ├── FR-003
 │   └── HLR-012
 │
-├── FR-
+├── FR-004
+│   ├── HLR-013
+│   ├── HLR-014
+│   └── HLR-015
+│
+├── IC-004
+│   └── HLR-016
+│
+└── IC-005
+    └── HLR-017
